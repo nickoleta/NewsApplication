@@ -2,10 +2,9 @@ package com.example.news.model;
 
 import android.graphics.Bitmap;
 
-import java.io.Serializable;
 import java.util.Objects;
 
-public class NewsDto implements Serializable, Cloneable {
+public class Article {
 
     private int id;
     private String title;
@@ -17,7 +16,7 @@ public class NewsDto implements Serializable, Cloneable {
     private Bitmap contentImage;
     private String date;
 
-    public NewsDto(String title, String author, String description, String content, String imageURL, String date) {
+    public Article(String title, String author, String description, String content, String imageURL, String date) {
         this.title = title;
         this.author = author;
         this.description = description;
@@ -102,15 +101,15 @@ public class NewsDto implements Serializable, Cloneable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        NewsDto newsDto = (NewsDto) o;
-        return id == newsDto.id &&
-                Objects.equals(title, newsDto.title) &&
-                Objects.equals(author, newsDto.author) &&
-                Objects.equals(description, newsDto.description) &&
-                Objects.equals(content, newsDto.content) &&
-                Objects.equals(imageURL, newsDto.imageURL) &&
-                Objects.equals(image, newsDto.image) &&
-                Objects.equals(date, newsDto.date);
+        Article article = (Article) o;
+        return id == article.id &&
+                Objects.equals(title, article.title) &&
+                Objects.equals(author, article.author) &&
+                Objects.equals(description, article.description) &&
+                Objects.equals(content, article.content) &&
+                Objects.equals(imageURL, article.imageURL) &&
+                Objects.equals(image, article.image) &&
+                Objects.equals(date, article.date);
     }
 
     @Override

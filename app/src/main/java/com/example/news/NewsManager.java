@@ -1,6 +1,6 @@
 package com.example.news;
 
-import com.example.news.model.NewsDto;
+import com.example.news.model.Article;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 public final class NewsManager {
 
     private static NewsManager instance;
-    private List<NewsDto> news;
+    private List<Article> news;
 
     private NewsManager() {
         this.news = new ArrayList<>();
@@ -21,11 +21,11 @@ public final class NewsManager {
         return instance;
     }
 
-    public void addAllNews(List<NewsDto> list) {
+    public void addAllNews(List<Article> list) {
         news.addAll(list);
     }
 
-    public List<NewsDto> getNews() {
+    public List<Article> getNews() {
         return this.news;
     }
 }

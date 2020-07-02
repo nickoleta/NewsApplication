@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.news.ActionsManager;
 import com.example.news.R;
 import com.example.news.controller.fragments.NewsContentFragment;
-import com.example.news.model.NewsDto;
+import com.example.news.model.Article;
 
 import java.util.List;
 
@@ -22,10 +22,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
 
     private static final String POSITION_BUNDLE_KEY = "position";
 
-    private List<NewsDto> data;
+    private List<Article> data;
     private LayoutInflater inflater;
 
-    public NewsAdapter(Context context, List<NewsDto> data) {
+    public NewsAdapter(Context context, List<Article> data) {
         this.data = data;
         this.inflater = LayoutInflater.from(context);
     }
@@ -39,7 +39,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull NewsViewHolder holder, int position) {
-        NewsDto dto = data.get(position);
+        Article dto = data.get(position);
         holder.setData(dto);
 
         NewsContentFragment newsContentFragment = new NewsContentFragment();

@@ -4,7 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
-import com.example.news.model.NewsDto;
+import com.example.news.model.Article;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -12,9 +12,9 @@ import java.util.List;
 
 public class DownloadImages extends AsyncTask<Integer, Void, Void> {
 
-    private List<NewsDto> news;
+    private List<Article> news;
 
-    DownloadImages(List<NewsDto> news) {
+    DownloadImages(List<Article> news) {
         this.news = news;
     }
 

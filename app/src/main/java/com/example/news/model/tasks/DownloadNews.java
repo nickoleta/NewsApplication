@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.example.news.AsyncResponse;
 import com.example.news.NewsManager;
-import com.example.news.model.NewsDto;
+import com.example.news.model.Article;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,7 +20,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DownloadNews extends AsyncTask<URL, Integer, List<NewsDto>> {
+public class DownloadNews extends AsyncTask<URL, Integer, List<Article>> {
 
     private static final String ARTICLES_JSON_FIELD = "articles";
     private static final String TITLE_JSON_FIELD = "title";
@@ -37,12 +37,12 @@ public class DownloadNews extends AsyncTask<URL, Integer, List<NewsDto>> {
     }
 
     @Override
-    protected List<NewsDto> doInBackground(URL... urls) {
+    protected List<Article> doInBackground(URL... urls) {
         HttpURLConnection connection = connect(urls[0]);
 
         StringBuilder jsonText = readData(connection);
 
-        List<NewsDto> news = new ArrayList<>();
+        List<Article> news = new ArrayList<>();
         if (jsonText != null) {
             news = parseData(jsonText);
         }
@@ -85,7 +85,7 @@ public class DownloadNews extends AsyncTask<URL, Integer, List<NewsDto>> {
         return jsonText;
     }
 
-    private List<NewsDto> parseData(StringBuilder jsonText) {
+    private List<Article> parseData(StringBuilder jsonText) {
         JSONObject jsonObject;
         JSONArray articles;
         try {
@@ -95,7 +95,7 @@ public class DownloadNews extends AsyncTask<URL, Integer, List<NewsDto>> {
             return null;
         }
 
-        List<NewsDto> items = new ArrayList<>();
+        List<Article> items = new ArrayList<>();
         for (int i = 0; i < articles.length(); i++) {
             JSONObject article;
             try {
@@ -109,7 +109,7 @@ public class DownloadNews extends AsyncTask<URL, Integer, List<NewsDto>> {
             }
 
             try {
-                NewsDto item = new NewsDto(article.getString(TITLE_JSON_FIELD),
+                Article item = new Article(article.getString(TITLE_JSON_FIELD),
                         article.getString(AUTHOR_JSON_FIELD),
                         article.getString(DESCRIPTION_JSON_FIELD),
                         article.getString(CONTENT_JSON_FIELD),
@@ -125,7 +125,7 @@ public class DownloadNews extends AsyncTask<URL, Integer, List<NewsDto>> {
         return items;
     }
 
-    private void downloadImages(List<NewsDto> news) {
+    private void downloadImages(List<Article> news) {
         for (int i = 0; i < news.size(); i += 5) {
             DownloadImages downloadImagesTask = new DownloadImages(news.subList(i, i + 5));
             downloadImagesTask.execute(i);
@@ -133,7 +133,7 @@ public class DownloadNews extends AsyncTask<URL, Integer, List<NewsDto>> {
     }
 
     @Override
-    protected void onPostExecute(List<NewsDto> news) {
+    protected void onPostExecute(List<Article> news) {
         super.onPostExecute(news);
         delegate.getNews(news);
     }

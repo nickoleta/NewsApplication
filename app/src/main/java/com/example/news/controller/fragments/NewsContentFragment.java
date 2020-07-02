@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.news.NewsManager;
 import com.example.news.R;
-import com.example.news.model.NewsDto;
+import com.example.news.model.Article;
 import com.example.news.model.tasks.DownloadContentImage;
 
 import java.net.MalformedURLException;
@@ -54,7 +54,7 @@ public class NewsContentFragment extends Fragment {
     private void setContent(Bundle bundle) {
         if (bundle != null) {
             int position = (int) bundle.get("position");
-            NewsDto item = NewsManager.getInstance().getNews().get(position);
+            Article item = NewsManager.getInstance().getNews().get(position);
             title.setText(item.getTitle());
             content.setText(item.getContent());
             author.setText(item.getAuthor());

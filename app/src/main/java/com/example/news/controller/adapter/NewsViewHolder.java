@@ -9,7 +9,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.news.R;
-import com.example.news.model.NewsDto;
+import com.example.news.model.Article;
 
 class NewsViewHolder extends RecyclerView.ViewHolder {
 
@@ -26,10 +26,10 @@ class NewsViewHolder extends RecyclerView.ViewHolder {
         this.author = itemView.findViewById(R.id.card_author);
     }
 
-    void setData(NewsDto newsDto) {
-        this.author.setText(newsDto.getAuthor());
-        this.title.setText(newsDto.getTitle());
-        this.image.setImageBitmap(newsDto.getImage());
+    void setData(Article article) {
+        this.author.setText(article.getAuthor());
+        this.title.setText(article.getTitle());
+        this.image.setImageBitmap(article.getImage());
     }
 
     CardView getCardView() {
