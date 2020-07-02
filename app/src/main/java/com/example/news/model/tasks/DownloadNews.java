@@ -126,9 +126,9 @@ public class DownloadNews extends AsyncTask<URL, Integer, List<Article>> {
     }
 
     private void downloadImages(List<Article> news) {
-        for (int i = 0; i < news.size(); i += 5) {
-            DownloadImages downloadImagesTask = new DownloadImages(news.subList(i, i + 5));
-            downloadImagesTask.execute(i);
+        for (int i = 0; i < news.size(); i += 10) {
+            DownloadImages downloadImagesTask = new DownloadImages(news);
+            downloadImagesTask.execute(0);
         }
     }
 

@@ -23,7 +23,7 @@ public class DownloadImages extends AsyncTask<Integer, Void, Void> {
         int position = params[0];
         String url = "";
 
-        for (int i = position; i <= position + 5; i++) {
+        for (int i = position; i < news.size(); i++) {
             if (isCancelled()) {
                 return null;
             }
