@@ -20,6 +20,8 @@ import static com.example.news.Constants.NEWS_CONTENT_FRAGMENT_TAG;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
 
+    private static final String POSITION_BUNDLE_KEY = "position";
+
     private List<NewsDto> data;
     private LayoutInflater inflater;
 
@@ -42,7 +44,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsViewHolder> {
 
         NewsContentFragment newsContentFragment = new NewsContentFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("position", position);
+        bundle.putInt(POSITION_BUNDLE_KEY, position);
         newsContentFragment.setArguments(bundle);
 
         holder.getCardView().setOnClickListener((View view) -> ActionsManager.replaceFragment(view.getContext(), R.id.main_container, newsContentFragment, NEWS_CONTENT_FRAGMENT_TAG));

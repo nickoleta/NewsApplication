@@ -22,6 +22,14 @@ import java.util.List;
 
 public class DownloadNews extends AsyncTask<URL, Integer, List<NewsDto>> {
 
+    private static final String ARTICLES_JSON_FIELD = "articles";
+    private static final String TITLE_JSON_FIELD = "title";
+    private static final String AUTHOR_JSON_FIELD = "author";
+    private static final String DESCRIPTION_JSON_FIELD = "description";
+    private static final String CONTENT_JSON_FIELD = "content";
+    private static final String IMAGE_URL_JSON_FIELD = "urlToImage";
+    private static final String PUBLISHED_AT_JSON_FIELD = "publishedAt";
+
     private AsyncResponse delegate;
 
     public DownloadNews(AsyncResponse asyncResponse) {
@@ -82,7 +90,7 @@ public class DownloadNews extends AsyncTask<URL, Integer, List<NewsDto>> {
         JSONArray articles;
         try {
             jsonObject = new JSONObject(jsonText.toString());
-            articles = jsonObject.getJSONArray("articles");
+            articles = jsonObject.getJSONArray(ARTICLES_JSON_FIELD);
         } catch (JSONException e) {
             return null;
         }
@@ -101,12 +109,12 @@ public class DownloadNews extends AsyncTask<URL, Integer, List<NewsDto>> {
             }
 
             try {
-                NewsDto item = new NewsDto(article.getString("title"),
-                        article.getString("author"),
-                        article.getString("description"),
-                        article.getString("content"),
-                        article.getString("urlToImage"),
-                        article.getString("publishedAt"));
+                NewsDto item = new NewsDto(article.getString(TITLE_JSON_FIELD),
+                        article.getString(AUTHOR_JSON_FIELD),
+                        article.getString(DESCRIPTION_JSON_FIELD),
+                        article.getString(CONTENT_JSON_FIELD),
+                        article.getString(IMAGE_URL_JSON_FIELD),
+                        article.getString(PUBLISHED_AT_JSON_FIELD));
                 items.add(item);
             } catch (JSONException e) {
                 return null;

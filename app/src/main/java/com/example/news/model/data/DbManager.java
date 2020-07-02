@@ -12,6 +12,9 @@ import com.example.news.model.dto.User;
 
 public class DbManager extends SQLiteOpenHelper {
 
+    private static final String USERNAME = "username";
+    private static final String PASSWORD = "password";
+
     private static final String DB_NAME = "news";
     private static final int DB_VERSION = 3;
 
@@ -51,16 +54,16 @@ public class DbManager extends SQLiteOpenHelper {
 
     public void saveUser(User user) {
         ContentValues content = new ContentValues();
-        content.put("username", user.getUsername());
-        content.put("password", user.getPassword());
+        content.put(USERNAME, user.getUsername());
+        content.put(PASSWORD, user.getPassword());
         instance.getWritableDatabase().insert(DbContract.UsersEntry.TABLE_NAME, null, content);
     }
 
     public boolean existsUser(String username, String pass) {
         Cursor cursor = instance.getReadableDatabase().rawQuery(SELECT_USER, null);
         while (cursor.moveToNext()) {
-            String currentUsername = cursor.getString(cursor.getColumnIndex("username"));
-            String currentPassword = cursor.getString(cursor.getColumnIndex("password"));
+            String currentUsername = cursor.getString(cursor.getColumnIndex(USERNAME));
+            String currentPassword = cursor.getString(cursor.getColumnIndex(PASSWORD));
             if (currentUsername.equals(username) && currentPassword.equals(pass)) {
                 cursor.close();
                 return true;
