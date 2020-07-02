@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.news.AsyncResponse;
 import com.example.news.NewsManager;
 import com.example.news.model.Article;
+import com.example.news.model.custom_exceptions.ParsingException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,6 +19,7 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DownloadNews extends AsyncTask<URL, Integer, List<Article>> {
@@ -40,14 +42,12 @@ public class DownloadNews extends AsyncTask<URL, Integer, List<Article>> {
     protected List<Article> doInBackground(URL... urls) {
         HttpURLConnection connection = connect(urls[0]);
 
+        if (connection == null) {
+            return Collections.emptyList();
+        }
         StringBuilder jsonText = readData(connection);
 
-        List<Article> news = new ArrayList<>();
-        if (jsonText != null) {
-            news = parseData(jsonText);
-        }
-
-        return news;
+        return jsonText == null ? Collections.emptyList() : parseData(jsonText);
     }
 
     private HttpURLConnection connect(URL url) {
@@ -77,7 +77,6 @@ public class DownloadNews extends AsyncTask<URL, Integer, List<Article>> {
                 jsonText.append(inputLine);
             }
         } catch (IOException e) {
-            Log.e("READING", "Could not read downloaded stream", e);
             return null;
         } finally {
             connection.disconnect();
@@ -92,7 +91,7 @@ public class DownloadNews extends AsyncTask<URL, Integer, List<Article>> {
             jsonObject = new JSONObject(jsonText.toString());
             articles = jsonObject.getJSONArray(ARTICLES_JSON_FIELD);
         } catch (JSONException e) {
-            return null;
+            throw new ParsingException("Could not parse articles from JSON array");
         }
 
         List<Article> items = new ArrayList<>();
@@ -101,15 +100,15 @@ public class DownloadNews extends AsyncTask<URL, Integer, List<Article>> {
             try {
                 article = articles.getJSONObject(i);
             } catch (JSONException e) {
-                return null;
+                throw new ParsingException("Could not parse article from JSON articles array");
             }
 
             if (isCancelled()) {
-                return null;
+                continue;
             }
 
             try {
-                Article item = new Article(article.getString(TITLE_JSON_FIELD),
+                final Article item = new Article(article.getString(TITLE_JSON_FIELD),
                         article.getString(AUTHOR_JSON_FIELD),
                         article.getString(DESCRIPTION_JSON_FIELD),
                         article.getString(CONTENT_JSON_FIELD),
@@ -117,7 +116,7 @@ public class DownloadNews extends AsyncTask<URL, Integer, List<Article>> {
                         article.getString(PUBLISHED_AT_JSON_FIELD));
                 items.add(item);
             } catch (JSONException e) {
-                return null;
+                throw new ParsingException("Could not parse a property from JSON article object");
             }
         }
         NewsManager.getInstance().addAllNews(items);
