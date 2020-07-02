@@ -78,11 +78,11 @@ public class RegistrationFragment extends Fragment {
             return false;
         }
         if (!InputValidator.isValidPassword(passwordStr)) {
-            passwordLayout.setError("Please enter a valid password");
+            passwordLayout.setError("A strong password should be at least 8 symbols long and should contain at least one capital letter and a special symbol");
             return false;
         }
         if (!InputValidator.isValidConfirmedPassword(passwordStr, confirmPassStr)) {
-            confirmPasswordLayout.setError("Password does not match");
+            confirmPasswordLayout.setError("Passwords do not match");
             return false;
         }
         User newUser = new User(usernameStr, passwordStr);
