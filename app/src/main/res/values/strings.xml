@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">NewsApp</string>
+
+    <!-- Login Activity -->
+    <!-- Login Fragment-->
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">login</string>
+    <string name="registration">registration</string>
+
+    <!-- Registration Fragment-->
+    <string name="confirm_password">Confirm password</string>
+    <string name="register">register</string>
+    <string name="cancel">cancel</string>
+
+    <!-- Main Activity -->
+    <!-- Main Fragment -->
+
+
+    <!-- News Content Fragment -->
+    <string name="title">Title</string>
+    <string name="related_news">Related news</string>
+    <string name="author">Author</string>
+    <string name="date">Date</string>
+    <string name="image">Image</string>
+    <string name="unknown_author">unknown author</string>
+    <string name="content">Content</string>
+    <string name="read_more">Read more</string>
+
+</resources>
