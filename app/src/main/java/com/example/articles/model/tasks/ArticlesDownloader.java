@@ -124,10 +124,8 @@ public class ArticlesDownloader extends AsyncTask<URL, Integer, List<Article>> {
     }
 
     private void downloadImages(List<Article> news) {
-        for (int i = 0; i < news.size(); i += 10) {
-            ImagesDownloader imagesDownloaderTask = new ImagesDownloader(news);
-            imagesDownloaderTask.execute(0);
-        }
+        ImagesDownloader imagesDownloaderTask = new ImagesDownloader(news);
+        imagesDownloaderTask.execute(0);
     }
 
     @Override
